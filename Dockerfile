@@ -56,6 +56,8 @@ RUN mkdir -p /run/apache2 /phpbb/opcache \
 COPY apache2/httpd.conf /etc/apache2/
 COPY apache2/conf.d/* /etc/apache2/conf.d/
 
+COPY remoteip.conf /etc/apache2/conf.d
+
 COPY php/php.ini /etc/php8/
 COPY php/php-cli.ini /etc/php8/
 COPY php/conf.d/* /etc/php8/conf.d/
