@@ -1,8 +1,10 @@
 FROM alpine:3.14
 
-LABEL maintainer="selim013@gmail.com"
+LABEL maintainer="jolle@julian-paul.de"
 
 RUN apk add --no-cache curl \
+    zip \
+    unzip \
     imagemagick \
     apache2 \
     php8 \
@@ -25,20 +27,25 @@ RUN apk add --no-cache curl \
     php8-zlib \
     php8-zip \
     su-exec
+    
+# Installing bash
+RUN apk add bash
+RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 ### phpBB
-ENV PHPBB_VERSION 3.3.4
-ENV PHPBB_SHA256 'a2436e375acf9ec8846fda82ffeda51774627967308fb3b71d395b90a1acfe8b'
+ENV PHPBB_VERSION 3.3.5
+ENV PHPBB_SHA256 'b72962629d3166e6344c362c5f6deee5ee5aae13750dec85efa4c80288211907'
 
 WORKDIR /tmp
 
-RUN curl -SL https://download.phpbb.com/pub/release/3.3/${PHPBB_VERSION}/phpBB-${PHPBB_VERSION}.tar.bz2 -o phpbb.tar.bz2 \
-    && echo "${PHPBB_SHA256}  phpbb.tar.bz2" | sha256sum -c - \
-    && tar -xjf phpbb.tar.bz2 \
+RUN echo "Europe/Berlin" > /etc/timezone
+RUN curl -SL https://downloads.phpbb.de/pakete/deutsch/3.3/${PHPBB_VERSION}/phpBB-${PHPBB_VERSION}-deutsch.zip -o phpbb.zip \
+    && echo "${PHPBB_SHA256}  phpbb.zip" | sha256sum -c - \
+    && unzip phpbb.zip \
     && mkdir /phpbb \
     && mkdir /phpbb/sqlite \
     && mv phpBB3 /phpbb/www \
-    && rm -f phpbb.tar.bz2
+    && rm -f phpbb.zip
 
 COPY phpbb/config.php /phpbb/www
 
@@ -49,9 +56,9 @@ RUN mkdir -p /run/apache2 /phpbb/opcache \
 COPY apache2/httpd.conf /etc/apache2/
 COPY apache2/conf.d/* /etc/apache2/conf.d/
 
-COPY php/php.ini /etc/php7/
-COPY php/php-cli.ini /etc/php7/
-COPY php/conf.d/* /etc/php7/conf.d/
+COPY php/php.ini /etc/php8/
+COPY php/php-cli.ini /etc/php8/
+COPY php/conf.d/* /etc/php8/conf.d/
 
 COPY start.sh /usr/local/bin/
 
