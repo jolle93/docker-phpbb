@@ -33,8 +33,8 @@ RUN apk add bash
 RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 ### phpBB
-ENV PHPBB_VERSION 3.3.5
-ENV PHPBB_SHA256 'b72962629d3166e6344c362c5f6deee5ee5aae13750dec85efa4c80288211907'
+ENV PHPBB_VERSION 3.3.8
+ENV PHPBB_SHA256 '1871cb443cee28e22299a5e64206b898fbb3abab811f42d982a8f01ce044f629'
 
 WORKDIR /tmp
 
@@ -56,7 +56,6 @@ RUN mkdir -p /run/apache2 /phpbb/opcache \
 COPY apache2/httpd.conf /etc/apache2/
 COPY apache2/conf.d/* /etc/apache2/conf.d/
 
-COPY remoteip.conf /etc/apache2/conf.d
 
 COPY php/php.ini /etc/php8/
 COPY php/php-cli.ini /etc/php8/
