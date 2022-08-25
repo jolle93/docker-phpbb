@@ -4,8 +4,9 @@ Lightweight, Alpine based [phpBB](https://www.phpbb.com/) docker image.
 
 # Supported tags and respective `Dockerfile` links
 
-- [`3.3`, `3.3.4`, `latest`](https://github.com/selim13/docker-phpbb/blob/master/Dockerfile) bundled with PHP 8
-- [`3.2`, `3.2.11`](https://github.com/selim13/docker-phpbb/blob/3.2-alpine-apache/Dockerfile) bundled with PHP 7.2
+- [`3.3.8-german`](https://github.com/jolle93/docker-phpbb/blob/master/Dockerfile) bundled with PHP 8 
+
+
 
 # How to use this image
 
@@ -16,7 +17,7 @@ installer script, just run a temporary container with `PHPBB_INSTALL=true`
 environment variable:
 
 ```console
-$ docker run -p 8000:80 --name phpbb-install -e PHPBB_INSTALL=true -d selim13/phpbb:3.3
+$ docker run -p 8000:80 --name phpbb-install -e PHPBB_INSTALL=true -d jolleburstfire/phpbb3:3.3.8-german
 ```
 
 Point your browser to the http://localhost:8000 to begin the 
@@ -43,7 +44,7 @@ You can start a container as follows:
 
 
 ```console
-$ docker run --name phpbb -d selim13/phpbb:3.3
+$ docker run --name phpbb -d jolleburstfire/phpbb3:3.3.8-german
 ```
 
 By default, it uses SQLite3 as a database backend, so you will need to supply
@@ -52,7 +53,7 @@ it with a database file. It's default path is `/phpbb/sqlite/sqlite.db`.
 You can import it from the temporary installation container above:
 
 ```console
-$ docker run --volumes-from phpbb-install --name phpbb -d selim13/phpbb:3.3
+$ docker run --volumes-from phpbb-install --name phpbb -d jolleburstfire/phpbb3:3.3.8-german
 ```
 
 Or just copy it inside container if you have one from previous phpBB
@@ -72,7 +73,7 @@ $ docker run --name phpbb     \
     -e PHPBB_DB_PORT=3306     \
     -e PHPBB_DB_NAME=phpbb    \
     -e PHPBB_DB_USER=phpbb    \
-    -e PHPBB_DB_PASSWD=pass -d selim13/phpbb:3.3
+    -e PHPBB_DB_PASSWD=pass -d jolleburstfire/phpbb3:3.3.8-german
 ```
 
 ## Environment variables 
@@ -197,7 +198,65 @@ Then push it to `/etc/apache2/conf.d/` directory, for example, by extending this
 image:
 
 ```dockerfile
-FROM selim13/phpbb:3.3
+FROM jolleburstfire/phpbb3:3.3.8-german
 
 COPY remoteip.conf /etc/apache2/conf.d
+```
+
+## Usage with `docker-compose`
+
+Here is an example docker-compose file of usage with mariadb
+
+```yaml
+version: "3.9"
+services:
+  phpbb3:
+    image: docker.io/jolleburstfire/phpbb3:3.3.8-german
+    container_name: forum
+    restart: 
+          always
+    ports:
+    - "80"
+    environment:
+      - PHPBB_DB_DRIVER=mysqli
+      - PHPBB_DB_USER=forum
+      - PHPBB_DB_NAME=forum
+      - PHPBB_DB_PASSWD=DBPASSWD
+      - PHPBB_DB_HOST=db
+      - PHPBB_DB_PORT=3306
+      - PHPBB_DB_AUTOMIGRATE='true'
+    depends_on:
+      - "db"
+    volumes:
+      - ./phpBB3/styles:/phpbb/www/styles/
+      - ./phpBB3/ext/:/phpbb/www/ext/
+      - ./images:/phpbb/www/images
+    networks:
+      - forum
+  db:
+    image: mariadb:latest
+    container_name: forum_db
+    restart: 
+      always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD=ROOT_SECRET
+      - MARIADB_USER=forum_user
+      - MARIADB_PASSWORD=DBPASSWD
+      - MARIADB_DATABASE=forum_db
+    networks:
+      - forum
+
+networks:
+   forum:
+     external: true
+
+volumes:
+  phpbb_data:
+  db_data:
+  phpbb-sqlite:
+  phpbb-files: 
+  phpbb-store: 
+  # phpbb-avatars: 
 ```
