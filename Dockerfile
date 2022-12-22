@@ -34,7 +34,7 @@ RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 ### phpBB
 ENV PHPBB_VERSION 3.3.9
-ENV PHPBB_SHA256 '18142f59951481dd56a9002d1c97d062e68efe77c6a1642f30e13cc054425d34'
+ENV PHPBB_SHA256 '02311fbfc29d50faafbfe3d527d522f4fe305f7230f9f981636a9ac7aba099a5'
 
 WORKDIR /tmp
 
@@ -71,7 +71,7 @@ WORKDIR /phpbb/www
 #VOLUME /phpbb/www/store
 #VOLUME /phpbb/www/images/avatars/upload
 
-ENV PHPBB_INSTALL=\
+ENV PHPBB_INSTALL= \
     PHPBB_DB_DRIVER=sqlite3 \
     PHPBB_DB_HOST=/phpbb/sqlite/sqlite.db \
     PHPBB_DB_PORT= \
