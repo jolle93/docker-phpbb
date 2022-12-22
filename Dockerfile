@@ -33,8 +33,8 @@ RUN apk add bash
 RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 ### phpBB
-ENV PHPBB_VERSION 3.3.8
-ENV PHPBB_SHA256 '1871cb443cee28e22299a5e64206b898fbb3abab811f42d982a8f01ce044f629'
+ENV PHPBB_VERSION 3.3.9
+ENV PHPBB_SHA256 '18142f59951481dd56a9002d1c97d062e68efe77c6a1642f30e13cc054425d34'
 
 WORKDIR /tmp
 
@@ -71,7 +71,7 @@ WORKDIR /phpbb/www
 #VOLUME /phpbb/www/store
 #VOLUME /phpbb/www/images/avatars/upload
 
-ENV PHPBB_INSTALL= \
+ENV PHPBB_INSTALL=\
     PHPBB_DB_DRIVER=sqlite3 \
     PHPBB_DB_HOST=/phpbb/sqlite/sqlite.db \
     PHPBB_DB_PORT= \
