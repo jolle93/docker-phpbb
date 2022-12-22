@@ -62,6 +62,7 @@ COPY php/php-cli.ini /etc/php8/
 COPY php/conf.d/* /etc/php8/conf.d/
 
 COPY start.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start.sh
 
 RUN chown -R apache:apache /phpbb
 WORKDIR /phpbb/www
