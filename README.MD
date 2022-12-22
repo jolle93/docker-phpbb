@@ -5,7 +5,7 @@ Lightweight, Alpine based [phpBB](https://www.phpbb.com/) docker image.
 - Forked from: [selim13](https://github.com/selim13/docker-phpbb)
 # Supported tags and respective `Dockerfile` links
 - [`3.3.9-german`](https://github.com/jolle93/docker-phpbb/blob/master/Dockerfile) bundled with PHP 8 
-- [`3.3.8-german`](https://github.com/jolle93/docker-phpbb/blob/master/Dockerfile) bundled with PHP 8 
+- [`3.3.8-german`](https://github.com/jolle93/docker-phpbb/tree/3.3.8-german) bundled with PHP 8 
 
 
 
