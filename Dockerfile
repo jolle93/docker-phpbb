@@ -33,8 +33,8 @@ RUN apk add bash
 RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 ### phpBB
-ENV PHPBB_VERSION 3.3.9
-ENV PHPBB_SHA256 '02311fbfc29d50faafbfe3d527d522f4fe305f7230f9f981636a9ac7aba099a5'
+ENV PHPBB_VERSION 3.3.17
+ENV PHPBB_SHA256 'ecfe256d3be031332dcba18a5d4df148d55ddc497d76b3ec5a90419bfeda7f06'
 
 WORKDIR /tmp
 
