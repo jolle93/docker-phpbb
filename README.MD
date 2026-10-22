@@ -4,7 +4,7 @@ Lightweight, Alpine based [phpBB](https://www.phpbb.com/) docker image.
 
 - Forked from: [selim13](https://github.com/selim13/docker-phpbb)
 # Supported tags and respective `Dockerfile` links
-- [`3.3.17-german`](https://github.com/jolle93/docker-phpbb/blob/master/Dockerfile) bundled with PHP 8 
+- [`3.3.19-german`](https://github.com/jolle93/docker-phpbb/blob/master/Dockerfile) bundled with PHP 8.4 
 - [`3.3.9-german`](https://github.com/jolle93/docker-phpbb/tree/3.3.9-german) bundled with PHP 8 
 - [`3.3.8-german`](https://github.com/jolle93/docker-phpbb/tree/3.3.8-german) bundled with PHP 8 
 
@@ -19,7 +19,7 @@ installer script, just run a temporary container with `PHPBB_INSTALL=true`
 environment variable:
 
 ```console
-$ docker run -p 8000:80 --name phpbb-install -e PHPBB_INSTALL=true -d jolleburstfire/phpbb3:3.3.17-german
+$ docker run -p 8000:80 --name phpbb-install -e PHPBB_INSTALL=true -d jolleburstfire/phpbb3:3.3.19-german
 ```
 
 Point your browser to the http://localhost:8000 to begin the 
@@ -46,7 +46,7 @@ You can start a container as follows:
 
 
 ```console
-$ docker run --name phpbb -d jolleburstfire/phpbb3:3.3.17-german
+$ docker run --name phpbb -d jolleburstfire/phpbb3:3.3.19-german
 ```
 
 By default, it uses SQLite3 as a database backend, so you will need to supply
@@ -55,7 +55,7 @@ it with a database file. It's default path is `/phpbb/sqlite/sqlite.db`.
 You can import it from the temporary installation container above:
 
 ```console
-$ docker run --volumes-from phpbb-install --name phpbb -d jolleburstfire/phpbb3:3.3.17-german
+$ docker run --volumes-from phpbb-install --name phpbb -d jolleburstfire/phpbb3:3.3.19-german
 ```
 
 Or just copy it inside container if you have one from previous phpBB
@@ -75,7 +75,7 @@ $ docker run --name phpbb     \
     -e PHPBB_DB_PORT=3306     \
     -e PHPBB_DB_NAME=phpbb    \
     -e PHPBB_DB_USER=phpbb    \
-    -e PHPBB_DB_PASSWD=pass -d jolleburstfire/phpbb3:3.3.17-german
+    -e PHPBB_DB_PASSWD=pass -d jolleburstfire/phpbb3:3.3.19-german
 ```
 
 ## Environment variables 
@@ -200,7 +200,7 @@ Then push it to `/etc/apache2/conf.d/` directory, for example, by extending this
 image:
 
 ```dockerfile
-FROM jolleburstfire/phpbb3:3.3.17-german
+FROM jolleburstfire/phpbb3:3.3.19-german
 
 COPY remoteip.conf /etc/apache2/conf.d
 ```
@@ -213,7 +213,7 @@ Here is an example docker-compose file of usage with mariadb
 version: "3.9"
 services:
   phpbb3:
-    image: docker.io/jolleburstfire/phpbb3:3.3.17-german
+    image: docker.io/jolleburstfire/phpbb3:3.3.19-german
     container_name: forum
     restart: 
           always
